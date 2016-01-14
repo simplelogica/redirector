@@ -26,3 +26,5 @@ entities. This introduces (in our opinion) an unnecesary bloat and complexity.
 
 *Redirector* aims to be easy, fast and lightweight. In fact, the magic is done in
 only 6 lines :)
+Ever wondered where a redirection comes from? *Redirector* will use
+the `x-redirected-by` header to show itself.
