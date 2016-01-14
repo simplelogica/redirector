@@ -24,13 +24,13 @@ function redirector_menu() {
       'description' => 'Configure redirections from the CMS',
       'page callback' => 'redirector_list',
       'file' => 'redirector.admin.inc',
-      'access callback' => true,
+      'access arguments' => ['administer redirector'],
     ],
     'admin/config/search/redirector/add' => [
       'title' => 'Create a redirection',
       'page callback' => 'drupal_get_form',
       'page arguments' => ['redirection_edit_form', null],
-      'access callback' => true,
+      'access arguments' => ['administer redirector'],
       'file' => 'redirector.admin.inc',
       'type' => MENU_LOCAL_ACTION
     ],
@@ -38,14 +38,14 @@ function redirector_menu() {
       'title' => 'Delete redirection',
       'page callback' => 'drupal_get_form',
       'page arguments' => ['redirection_delete_form', 4],
-      'access callback' => true,
+      'access arguments' => ['administer redirector'],
       'file' => 'redirector.admin.inc',
     ],
     'admin/config/search/redirector/%/edit' => [
       'title' => 'Edit a redirection',
       'page callback' => 'drupal_get_form',
       'page arguments' => ['redirection_edit_form', 4],
-      'access callback' => true,
+      'access arguments' => ['administer redirector'],
       'file' => 'redirector.admin.inc',
     ],
   ];
