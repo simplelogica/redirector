@@ -1,0 +1,29 @@
+<?php
+
+function redirector_schema() {
+  return [
+    'redirector' => [
+      'description' => 'Redirection patterns',
+      'fields' => [
+        'rid' => [
+          'type' => 'serial',
+          'not null' => true,
+        ],
+        'patterns' => [
+          'type' => 'text',
+          'not null' => true,
+        ],
+        'target' => [
+          'type' => 'text',
+          'not null' => true
+        ],
+        'code' => [
+          'type' => 'int',
+          'size' => 'small',
+          'not null' => true
+        ],
+      ],
+      'primary key' => ['rid'],
+    ],
+  ];
+}

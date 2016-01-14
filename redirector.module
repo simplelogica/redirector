@@ -1,0 +1,86 @@
+<?php
+
+function redirector_init() {
+  $current_page = drupal_get_path_alias();
+  foreach (_get_redirections() as $redirection) {
+    if (drupal_match_path($current_page, $redirection->patterns)) {
+      drupal_goto($redirection->target, [], $redirection->code);
+    }
+  }
+}
+
+function redirect_permission() {
+  return [
+    'administer redirector' => [
+      'title' => t('Administer redirector'),
+    ],
+  ];
+}
+
+function redirector_menu() {
+  return [
+    'admin/config/search/redirector' => [
+      'title' => 'Redirector',
+      'description' => 'Configure redirections from the CMS',
+      'page callback' => 'redirector_list',
+      'file' => 'redirector.admin.inc',
+      'access callback' => true,
+    ],
+    'admin/config/search/redirector/add' => [
+      'title' => 'Create a redirection',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => ['redirection_edit_form', null],
+      'access callback' => true,
+      'file' => 'redirector.admin.inc',
+      'type' => MENU_LOCAL_ACTION
+    ],
+    'admin/config/search/redirector/%/delete' => [
+      'title' => 'Delete redirection',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => ['redirection_delete_form', 4],
+      'access callback' => true,
+      'file' => 'redirector.admin.inc',
+    ],
+    'admin/config/search/redirector/%/edit' => [
+      'title' => 'Edit a redirection',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => ['redirection_edit_form', 4],
+      'access callback' => true,
+      'file' => 'redirector.admin.inc',
+    ],
+  ];
+}
+
+function _get_redirections() {
+  return db_select('redirector')
+    ->fields('redirector')
+    ->execute()
+    ->fetchAll();
+}
+
+function _get_redirection($redirection_id) {
+  return db_select('redirector')
+    ->fields('redirector')
+    ->condition('rid', $redirection_id)
+    ->execute()
+    ->fetch();
+}
+
+function _edit_redirection($redirection_id, $values) {
+  db_update('redirector')
+    ->condition('rid', $redirection_id)
+    ->fields($values)
+    ->execute();
+}
+
+function _add_redirection($values) {
+  db_insert('redirector')
+    ->fields($values)
+    ->execute();
+}
+
+function _delete_redirection($redirection_id) {
+  return db_delete('redirector')
+    ->condition('rid', $redirection_id)
+    ->execute();
+}
