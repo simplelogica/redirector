@@ -1,2 +1,3 @@
 # redirector
-Manage redirections inside Drupal
+
+*Redirector* allows you to manage redirections from inside Drupal.
