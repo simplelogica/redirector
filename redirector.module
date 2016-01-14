@@ -4,6 +4,7 @@ function redirector_init() {
   $current_page = drupal_get_path_alias();
   foreach (_get_redirections() as $redirection) {
     if (drupal_match_path($current_page, $redirection->patterns)) {
+      drupal_add_http_header("x-redirected-by", "https://github.com/simplelogica/redirector");
       drupal_goto($redirection->target, [], $redirection->code);
     }
   }
